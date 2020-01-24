@@ -20,11 +20,36 @@ class Series{
     }
     insere(serie){
         return new Promise((resolve, reject)=>{
-            const sql = "INSERT INTO series SET?";
+            const sql = "INSERT INTO series SET ?";
             conexao.query(sql, serie, (erro, retorno)=>{
                 if(erro){
                     reject(erro)
                 }
+                else{
+                    resolve(retorno)
+                }
+            })
+        })
+    }
+    buscaPorId(id){
+        return new Promise((resolve, reject)=>{
+            const sql = 'select *from series where id = ?';
+            conexao.query(sql, id, (erro, retorno)=>{
+                if(erro) reject('Erro ao buscar! ' + erro)
+
+                else{
+                    resolve(retorno[0])
+                }
+            })
+            
+        })
+        
+    }
+    deletar(id){
+        return new Promise((resolve, reject)=>{
+            const sql = "DELETE from series where id = ?";
+            conexao.query(sql, id, (erro, retorno)=>{
+                if(erro) reject ('erro ao apagar ' + erro);
                 else{
                     resolve(retorno)
                 }
