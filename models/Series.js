@@ -56,5 +56,18 @@ class Series{
             })
         })
     }
+    atualiza(serie){
+        return new Promise((resolve, reject)=>{
+            const sql = "UPDATE series SET ? WHERE id =?";
+            conexao.query(sql, [serie, serie.id], (erro, retorno)=>{
+                if(erro){
+                    reject('erro ao atualizar ' + erro)
+                }
+                else{
+                    resolve(retorno)
+                }
+            })
+        })
+    }
 }
 module.exports = new Series();

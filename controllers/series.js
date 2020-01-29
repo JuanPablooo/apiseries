@@ -44,6 +44,7 @@
             res.status(500).send({erro: "erro ao buscar"})
         })
     })
+   
     app.delete("/series/:id", (req, res)=>{
         const id = req.params.id;
         serieDao = app.models.Series;
@@ -58,6 +59,23 @@
         .catch(erro =>{
             console.log("ERRO ao deletar " + erro);
         })
+    })
+    app.put("/series/:id", (req, res)=>{
+        const id = req.params.id;
+        const serie = req.body;
+        serie.id = id;
+        serieDao = app.models.Series;
+        serieDao.atualiza(serie)
+        .then(retorno => {
+            if(!retorno.affectedRows){
+                res.status(404).send({"serie": "nao emcontrada"});
+                return;
+            }
+            res.send(serie)
+            
+        })
+        .catch(erro => res.status(500).send(erro))
+
     })
 }
 
