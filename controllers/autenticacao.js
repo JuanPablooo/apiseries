@@ -1,13 +1,10 @@
 
 const {check, validationResult} = require('express-validator');
- 
+const UsuarioValidator = require('../validators/Usuario');
 
 autenticacao = (app) =>{
     app.post("/registrar", 
-        [
-            check('nome').isLength({min:3, max:50})
-        ]
-        ,
+    UsuarioValidator.validacoes(),
         (req, res)=>{
         const erros = validationResult(req);
         if(!erros.isEmpty()){
@@ -17,9 +14,9 @@ autenticacao = (app) =>{
         const usuario = req.body;
         usuarioDao = app.models.Usuarios;
         usuarioDao.insere(usuario)
-            .then(usuario=> res.status(201).send(usuario)
+            .then(usuario=> res.status(201).send(usuario))
             .catch(erro => res.status(500).send(erro))
-        )
+        
     })
 }
 

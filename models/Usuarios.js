@@ -4,6 +4,7 @@ class Usuarios {
     insere(usuario){
         return new Promise((resolve, reject)=>{
             const sql = 'INSERT INTO usuarios SET ?';
+            console.log("jdjfsd");
             conexao.query(sql, usuario, (erro, retorno)=>{
                 if(erro) reject ("Erro ao salvar: " + erro)
                 else{
@@ -20,7 +21,7 @@ class Usuarios {
             conexao.query(sql, email, (erro, retorno)=>{
                 if(erro) reject('Erro ao consultar: ' + erro)
                 else{
-                    resolve(retorno);
+                    resolve(retorno[0]);
                 } 
             })
         })
