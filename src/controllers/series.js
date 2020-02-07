@@ -6,7 +6,7 @@ const serieDAO = new (require("../models/Series"))();
  module.exports = {
 
     async listar (req, res) {
-        
+        const lista = await serieDAO.listar()
         if(lista) return res.send(lista);
         res.status(404).send({erro:"lista vazia"})
         
@@ -14,7 +14,7 @@ const serieDAO = new (require("../models/Series"))();
     async insere(req, res){
         let serie = req.body;
         try {
-            const resultado = await erieDAO.insere(serie);
+            const resultado = await serieDAO.insere(serie);
     
             const insertedId = resultado.insertId;
             serie = {"id": insertedId, ...serie}
@@ -26,12 +26,15 @@ const serieDAO = new (require("../models/Series"))();
         
     },
     async buscarPorId(req, res){
-        const id = params.id;
-        const serie = await serieDao.buscarPorId(id);
+        const id = req.params.id;
+        let serie = await serieDAO.buscaPorId(id);
+        serie = serie[0];
         if(!serie){
+            console.log("jedsuiofsduih")
             return res.status(500).send({erro: "erro ao buscar serie"});
         }
-        return serie;
+        
+        return res.send(serie);
     },
 
     async atualiza(req, res){
@@ -50,12 +53,12 @@ const serieDAO = new (require("../models/Series"))();
 
    async delete(req, res){
         const id = req.params.id;
-        serieDao = app.models.Series;
 
-        const retorno = await serieDao.deletar(id);
+        const retorno = await serieDAO.deletar(id);
 
         if(!retorno.affectedRows)
             return res.status(404).send({erro: "serie nao encontrada"});
+
         res.status(204).send();
    }
 }

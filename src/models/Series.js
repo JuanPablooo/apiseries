@@ -1,14 +1,16 @@
 const baseQuery = require("./baseQuery");
 
 class Series{
-    lista(){        
+    listar(){     
+       //return console.log("jljhsdfj")   
         return baseQuery('select *from series');            
     }
     insere(serie){
-        return baseQuery("INSERT INTO series SET ?");
+        return baseQuery("INSERT INTO series SET ?", serie);
             
     }
     buscaPorId(id){
+        //return console.log("jljhsdfj") 
         return baseQuery('select *from series where id = ?', id);
         
     }
