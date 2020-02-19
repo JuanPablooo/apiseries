@@ -14,8 +14,13 @@ app.use(alowCrossDomain)
 
 const auth = require("./routes/authRoutes");
 const series = require('./routes/seriesRoutes');
+const authMidd = require('./middlewares/auth');
+//rota publica
+app.use('/auth', auth);
+//usando middl
+app.use(authMidd);
 
-app.use('/series', series)
-app.use('/auth', auth)
+app.use('/series', series);
+
 
 module.exports = app;
