@@ -48,12 +48,12 @@ module.exports={
             usuario = usuario[0]
             if(!usuario){
                 console.log('uu')
-                return res.status(400).send({})
+                return res.status(400).send({erro: "usuario nao encontrado"})
             }
             if(await !bcrypt.compare(senha, usuario.senha)){
                 return res.status(400).send({erro: "senha invalida"})
             }
-
+            delete usuario.senha
             res.send({
                 usuario,
                 token: gerarToken( {id:usuario.id})
