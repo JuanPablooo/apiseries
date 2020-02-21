@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs');
 
 gerarToken = (params)=> {
     return jwt.sign(params, authConfig.secret, {
-        expiresIn:60
+        expiresIn:900
 
     })
 }
@@ -50,7 +50,7 @@ module.exports={
                 console.log('uu')
                 return res.status(400).send({erro: "usuario nao encontrado"})
             }
-            if(await !bcrypt.compare(senha, usuario.senha)){
+            if(! await bcrypt.compare(senha, usuario.senha)){
                 return res.status(400).send({erro: "senha invalida"})
             }
             delete usuario.senha
